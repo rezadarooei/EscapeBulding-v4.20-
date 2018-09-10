@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "OpenDoor.h"
-
+#include "Engine/TriggerVolume.h"
 
 // Sets default values for this component's properties
 UOpenDoor::UOpenDoor()
@@ -19,17 +19,25 @@ void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	AActor *Owner = GetOwner();
-	FVector Location = Owner->GetTransform().GetLocation();
-	Owner->SetActorLocation(FVector(Location.X,Location.Y+100,Location.Z));
+	
 }
+
+
 
 
 // Called every frame
 void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
+	if (PressurePlate->IsOverlappingActor(ActorOpensDoor))
+	{
+		OpenDoor();
+	}
 }
 
+void UOpenDoor::OpenDoor()
+{
+	AActor *Owner = GetOwner();
+	FVector Location = Owner->GetTransform().GetLocation();
+	Owner->SetActorLocation(FVector(Location.X, Location.Y + OpenMoveDoor, Location.Z));
+}
