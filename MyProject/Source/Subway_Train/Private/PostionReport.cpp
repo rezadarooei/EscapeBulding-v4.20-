@@ -18,8 +18,9 @@ UPostionReport::UPostionReport()
 void UPostionReport::BeginPlay()
 {
 	Super::BeginPlay();
-
-	GEngine->AddOnScreenDebugMessage(-1, 4, FColor::Red, FString::Printf(TEXT("It is CHair")),true);
+	AActor* Owner = GetOwner();
+	FVector Transform = Owner->GetActorTransform().GetLocation();
+	GEngine->AddOnScreenDebugMessage(-1, 4, FColor::Red, FString::Printf(TEXT("It is  %s at %s"),*Owner->GetName(),*Transform.ToString()),true);
 	
 }
 
